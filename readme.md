@@ -23,8 +23,8 @@ Si quieres probar como funciona para hacerte una idea, puedes probar una versió
 3. Debe utilizarse GitActions el workflow adjunto.
 4. Debe protegerse main en GitHub para que todo lo que se mergee pase por pull-request y que el workflow se cumpla.
 5. En el caso de llegar a HTML/CSS.
-   4.1. Se utilizará BEM/SASS.
-   4.2. Se debe desplegar a Netlify.
+  4.1. Se utilizará BEM/SASS.
+  4.2. Se debe desplegar a Netlify.
 
 ## Milestones
 
@@ -33,5 +33,5 @@ Si quieres probar como funciona para hacerte una idea, puedes probar una versió
 
 3. Añadir HTML/CSS.
 4. Modificar JS para que:
-   a. Las células sigan avanzando al llegar a la pared y desaparezcan.
-   b. Las células salgan por un lado de la cuadrícula y aparezcan por el otro.
+  a. Las células sigan avanzando al llegar a la pared y desaparezcan.
+  b. Las células salgan por un lado de la cuadrícula y aparezcan por el otro.
