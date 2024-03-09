@@ -1,14 +1,18 @@
 /* eslint-disable max-depth */
 const generateBoard = () => {
   const grid = [
-    [0, 0, 0, 0, 1, 0],
-    [0, 1, 1, 0, 0, 0],
-    [0, 1, 1, 1, 0, 0],
-    [0, 0, 0, 1, 0, 0],
-    [0, 1, 1, 1, 1, 0],
-    [0, 1, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+    [0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0],
+    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+    [0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
   return grid;
 };
@@ -54,8 +58,30 @@ const countAliveCells = (board, row, col) => {
   return aliveCounter;
 };
 
+const createTable = (board) => {
+  const table = document.createElement('table');
+
+  board.forEach((row) => {
+    const tr = document.createElement('tr');
+
+    row.forEach((cell) => {
+      const td = document.createElement('td');
+      td.textContent = cell;
+      tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+  });
+
+  return table;
+};
+
 export const gameOfLife = () => {
   let gameBoard = generateBoard();
+  let table = createTable(gameBoard);
+  const htmlBoard = document.querySelector('.game-board');
+  htmlBoard.appendChild(table);
+  console.log(gameBoard);
   function startRound() {
     const newBoard = [];
     for (let i = 0; i < gameBoard.length; i++) {
@@ -90,6 +116,9 @@ export const gameOfLife = () => {
     }
 
     gameBoard = newBoard;
+    table = createTable(newBoard);
+    const newTable = document.querySelector('.game-board table');
+    newTable.innerHTML = table.innerHTML;
     console.log(newBoard);
   }
 
