@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  text-align: center;
+}
+
+.game-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  height: 70vh;
+  border: 3px solid black;
+}
+
+.game-board table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
+
+.game-board table td {
+  padding-inline: 10px;
+}
