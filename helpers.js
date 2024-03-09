@@ -2,13 +2,13 @@
 const generateBoard = () => {
   const grid = [
     [0, 0, 0, 0, 1, 0],
-    [0, 1, 1, 0, 0, 1],
-    [1, 1, 1, 1, 0, 1],
-    [1, 0, 0, 1, 0, 0],
-    [0, 1, 1, 1, 1, 0],
-    [0, 1, 1, 0, 0, 1],
-    [0, 0, 1, 0, 0, 0],
+    [0, 1, 1, 0, 0, 0],
+    [0, 1, 1, 1, 0, 0],
     [0, 0, 0, 1, 0, 0],
+    [0, 1, 1, 1, 1, 0],
+    [0, 1, 1, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
   ];
   return grid;
 };
@@ -55,12 +55,12 @@ const countAliveCells = (board, row, col) => {
 };
 
 export const gameOfLife = () => {
-  const gameBoard = generateBoard();
+  let gameBoard = generateBoard();
   function startRound() {
     const newBoard = [];
-    for (let i = 0; i < gameBoard.length - 1; i++) {
+    for (let i = 0; i < gameBoard.length; i++) {
       newBoard.push([]);
-      for (let j = 0; j < gameBoard[i].length - 1; j++) {
+      for (let j = 0; j < gameBoard[i].length; j++) {
         if (
           i > 0 &&
           i < gameBoard.length - 1 &&
@@ -68,7 +68,6 @@ export const gameOfLife = () => {
           j < gameBoard[i].length - 1
         ) {
           const aliveCells = countAliveCells(gameBoard, i, j);
-          // Console.log(aliveCells);
           if (gameBoard[i][j] === 1) {
             if (aliveCells < 2 || aliveCells > 3) {
               newBoard[i].push(0);
@@ -84,12 +83,13 @@ export const gameOfLife = () => {
               newBoard[i].push(0);
             }
           }
+        } else {
+          newBoard[i].push(0);
         }
-
-        newBoard[i].push(0);
       }
     }
 
+    gameBoard = newBoard;
     console.log(newBoard);
   }
 
