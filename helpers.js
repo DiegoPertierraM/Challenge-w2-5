@@ -1,18 +1,21 @@
 /* eslint-disable max-depth */
 const generateBoard = () => {
   const grid = [
-    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-    [0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0],
-    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0],
-    [0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0],
-    [0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
   ];
   return grid;
 };
@@ -80,8 +83,10 @@ export const gameOfLife = () => {
   let gameBoard = generateBoard();
   let table = createTable(gameBoard);
   const htmlBoard = document.querySelector('.game-board');
+  const gameBtns = document.querySelector('.game-btns');
+
   htmlBoard.appendChild(table);
-  console.log(gameBoard);
+
   function startRound() {
     const newBoard = [];
     for (let i = 0; i < gameBoard.length; i++) {
@@ -119,8 +124,30 @@ export const gameOfLife = () => {
     table = createTable(newBoard);
     const newTable = document.querySelector('.game-board table');
     newTable.innerHTML = table.innerHTML;
-    console.log(newBoard);
   }
 
-  setInterval(startRound, 1000);
+  let isStarted = false;
+  let intervalId;
+
+  const onClickStart = () => {
+    if (isStarted === false) {
+      intervalId = setInterval(startRound, 750);
+      isStarted = true;
+    }
+  };
+
+  const onClickStop = () => {
+    clearInterval(intervalId);
+    isStarted = false;
+  };
+
+  const reset = () => {
+    gameBoard = generateBoard();
+    const newTable = createTable(gameBoard);
+    htmlBoard.replaceChild(table, newTable);
+  };
+
+  gameBtns.children[0].addEventListener('click', onClickStart);
+  gameBtns.children[1].addEventListener('click', onClickStop);
+  gameBtns.children[2].addEventListener('click', reset);
 };
