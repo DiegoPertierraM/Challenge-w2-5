@@ -1,22 +1,18 @@
 /* eslint-disable max-depth */
-const generateBoard = () => {
-  const grid = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0],
-    [0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0],
-    [0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0],
-    [0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0],
-    [0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0],
-    [0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
-    [0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0],
-    [0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ];
+const generateBoard = (row, col) => {
+  const grid = [];
+  for (let i = 0; i < row; i++) {
+    grid.push([]);
+    for (let j = 0; j < col; j++) {
+      const randomNum = Math.trunc(Math.random() * 2);
+      if (randomNum === 0) {
+        grid[i].push('⬜');
+      } else {
+        grid[i].push('⬛');
+      }
+    }
+  }
+
   return grid;
 };
 
@@ -25,35 +21,35 @@ const countAliveCells = (board, row, col) => {
 
   for (let i = col; i < board[row].length - 1; i++) {
     aliveCounter = 0;
-    if (board[row - 1][col] === 1) {
+    if (board[row - 1][col] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row - 1][col + 1] === 1) {
+    if (board[row - 1][col + 1] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row][col + 1] === 1) {
+    if (board[row][col + 1] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row + 1][col + 1] === 1) {
+    if (board[row + 1][col + 1] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row + 1][col] === 1) {
+    if (board[row + 1][col] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row + 1][col - 1] === 1) {
+    if (board[row + 1][col - 1] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row][col - 1] === 1) {
+    if (board[row][col - 1] === '⬛') {
       aliveCounter++;
     }
 
-    if (board[row - 1][col - 1] === 1) {
+    if (board[row - 1][col - 1] === '⬛') {
       aliveCounter++;
     }
   }
@@ -80,7 +76,7 @@ const createTable = (board) => {
 };
 
 export const gameOfLife = () => {
-  let gameBoard = generateBoard();
+  let gameBoard = generateBoard(20, 20);
   let table = createTable(gameBoard);
   const htmlBoard = document.querySelector('.game-board');
   const gameBtns = document.querySelector('.game-btns');
@@ -99,23 +95,23 @@ export const gameOfLife = () => {
           j < gameBoard[i].length - 1
         ) {
           const aliveCells = countAliveCells(gameBoard, i, j);
-          if (gameBoard[i][j] === 1) {
+          if (gameBoard[i][j] === '⬛') {
             if (aliveCells < 2 || aliveCells > 3) {
-              newBoard[i].push(0);
+              newBoard[i].push('⬜');
             } else {
-              newBoard[i].push(1);
+              newBoard[i].push('⬛');
             }
           }
 
-          if (gameBoard[i][j] === 0) {
+          if (gameBoard[i][j] === '⬜') {
             if (aliveCells === 3) {
-              newBoard[i].push(1);
+              newBoard[i].push('⬛');
             } else {
-              newBoard[i].push(0);
+              newBoard[i].push('⬜');
             }
           }
         } else {
-          newBoard[i].push(0);
+          newBoard[i].push('⬜');
         }
       }
     }
@@ -131,7 +127,7 @@ export const gameOfLife = () => {
 
   const onClickStart = () => {
     if (isStarted === false) {
-      intervalId = setInterval(startRound, 750);
+      intervalId = setInterval(startRound, 500);
       isStarted = true;
     }
   };
@@ -141,13 +137,6 @@ export const gameOfLife = () => {
     isStarted = false;
   };
 
-  const reset = () => {
-    gameBoard = generateBoard();
-    const newTable = createTable(gameBoard);
-    htmlBoard.replaceChild(table, newTable);
-  };
-
   gameBtns.children[0].addEventListener('click', onClickStart);
   gameBtns.children[1].addEventListener('click', onClickStop);
-  gameBtns.children[2].addEventListener('click', reset);
 };

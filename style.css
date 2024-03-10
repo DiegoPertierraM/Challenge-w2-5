@@ -4,10 +4,12 @@
 
 body {
   margin: 0;
+  font-family: monospace;
 }
 
 header {
   text-align: center;
+  margin-block-start: 2rem;
 }
 
 .game-container {
@@ -24,11 +26,10 @@ header {
   align-items: center;
   width: 700px;
   height: 70vh;
-  border: 3px solid black;
 }
 
 .game-board table {
-  font-size: 1.5rem;
+  font-size: 0.9rem;
 }
 
 .game-board table td {
